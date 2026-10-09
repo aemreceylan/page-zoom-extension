@@ -78,69 +78,76 @@ A powerful, privacy-first Chrome extension that solves the browser's default beh
 ## 🚀 Key Features
 
 ### 1. 🔍 Per-Tab Zoom Isolation (Default: Stateless)
-* **No Cross-Tab Bleed:** Zooming in one tab will **never** alter zoom levels in other tabs open to the same website or domain.
-* **Temporary by Default:** Zoom levels are isolated to the active tab and reset automatically when the tab is closed, unless explicitly saved.
+
+- **No Cross-Tab Bleed:** Zooming in one tab will **never** alter zoom levels in other tabs open to the same website or domain.
+- **Temporary by Default:** Zoom levels are isolated to the active tab and reset automatically when the tab is closed, unless explicitly saved.
 
 ### 2. 💾 Smart Persistence & Auto-Save Recording
-* **Clean-URL Matching:** Strips dynamic query parameters (`?query=...`) and hash fragments (`#hash`) to save zoom levels cleanly per address path.
-* **Flexible Persistence Modes:**
-  * **Save for this Address:** One-click save button and shortcut to remember your magnification preference for that specific page.
-  * **Auto-Save / Record Mode:**
-    * *Off (Temporary):* Per-tab ephemeral zoom.
-    * *On (This Address):* Automatically saves any zoom adjustments for the current URL and synchronizes open tabs on that address in real time.
-    * *Always On (All Addresses):* Automatically remembers zoom levels everywhere you browse.
-* **One-Click Reset & Deletion:** Instantly wipe saved preferences for the current page and return to 100%.
+
+- **Clean-URL Matching:** Strips dynamic query parameters (`?query=...`) and hash fragments (`#hash`) to save zoom levels cleanly per address path.
+- **Flexible Persistence Modes:**
+  - **Save for this Address:** One-click save button and shortcut to remember your magnification preference for that specific page.
+  - **Auto-Save / Record Mode:**
+    - _Off (Temporary):_ Per-tab ephemeral zoom.
+    - _On (This Address):_ Automatically saves any zoom adjustments for the current URL and synchronizes open tabs on that address in real time.
+    - _Always On (All Addresses):_ Automatically remembers zoom levels everywhere you browse.
+- **One-Click Reset & Deletion:** Instantly wipe saved preferences for the current page and return to 100%.
 
 ### 3. 🖱️ Mouse & Keyboard Controls
-* **`Ctrl + Mouse Wheel`:** Smooth, responsive zoom in and out directly on any web page.
-* **`Ctrl + Middle Click (Mouse 3)`:** Instantly reset page zoom to 100%.
-* **`Ctrl + +` / `Ctrl + -`:** Standard keyboard override for zoom in and out.
-* **`Ctrl + 0`:** Instant 100% reset.
-* **`Alt + S`:** Quick shortcut to save the active zoom level for the current address.
-* **`Alt + D`:** Quick shortcut to delete the saved zoom level and reset.
-* **Non-Intrusive In-Page Toasts:** Provides subtle, modern floating feedback when shortcuts are triggered.
+
+- **`Ctrl + Mouse Wheel`:** Smooth, responsive zoom in and out directly on any web page.
+- **`Ctrl + Middle Click (Mouse 3)`:** Instantly reset page zoom to 100%.
+- **`Ctrl + +` / `Ctrl + -`:** Standard keyboard override for zoom in and out.
+- **`Ctrl + 0`:** Instant 100% reset.
+- **`Alt + S`:** Quick shortcut to save the active zoom level for the current address.
+- **`Alt + D`:** Quick shortcut to delete the saved zoom level and reset.
+- **Non-Intrusive In-Page Toasts:** Provides subtle, modern floating feedback when shortcuts are triggered.
 
 ### 4. ⌨️ Interactive Key Recorder
-* Easily customize any shortcut directly from the **Shortcuts** tab in the popup.
-* Click any shortcut box, press your preferred key combination, and it automatically registers.
-* Includes a one-click **"Reset Shortcuts to Default"** option.
+
+- Easily customize any shortcut directly from the **Shortcuts** tab in the popup.
+- Click any shortcut box, press your preferred key combination, and it automatically registers.
+- Includes a one-click **"Reset Shortcuts to Default"** option.
 
 ### 5. 🛡️ Site Management (Blacklist & Whitelist Modes)
-* **Blacklist Mode:** The extension runs everywhere *except* domains in your blacklist.
-* **Whitelist Mode:** The extension runs *only* on explicitly allowed domains.
-* **Quick Toggle:** Add or remove the active site with a single click, or type domain names manually (e.g. `github.com`).
+
+- **Blacklist Mode:** The extension runs everywhere _except_ domains in your blacklist.
+- **Whitelist Mode:** The extension runs _only_ on explicitly allowed domains.
+- **Quick Toggle:** Add or remove the active site with a single click, or type domain names manually (e.g. `github.com`).
 
 ### 6. 🏷️ Real-Time Toolbar Badge
-* Displays the active tab's current zoom percentage (`100%`, `125%`, `90%`) directly over the extension icon in Chrome's toolbar.
-* Can be toggled on or off in the Settings tab.
+
+- Displays the active tab's current zoom percentage (`100%`, `125%`, `90%`) directly over the extension icon in Chrome's toolbar.
+- Can be toggled on or off in the Settings tab.
 
 ### 7. 🌍 Internationalization (i18n — 7 Languages)
-* Fully translated into **7 languages**:
-  * 🇺🇸 English (US)
-  * 🇹🇷 Türkçe (TR)
-  * 🇩🇪 Deutsch (DE)
-  * 🇪🇸 Español (ES)
-  * 🇫🇷 Français (FR)
-  * 🇷🇺 Русский (RU)
-  * 🇯🇵 日本語 (JA)
-* Automatically detects your browser's language on initial launch.
-* Switch languages at any time from the Settings tab without reloading.
+
+- Fully translated into **7 languages**:
+  - 🇺🇸 English (US)
+  - 🇹🇷 Türkçe (TR)
+  - 🇩🇪 Deutsch (DE)
+  - 🇪🇸 Español (ES)
+  - 🇫🇷 Français (FR)
+  - 🇷🇺 Русский (RU)
+  - 🇯🇵 日本語 (JA)
+- Automatically detects your browser's language on initial launch.
+- Switch languages at any time from the Settings tab without reloading.
 
 ---
 
 ## ⌨️ Default Shortcuts Cheatsheet
 
-| Action | Shortcut / Trigger | Description |
-| :--- | :--- | :--- |
-| **Zoom In** | `Ctrl + +` | Increases zoom by configured step size (default: 10%) |
-| **Zoom Out** | `Ctrl + -` | Decreases zoom by configured step size |
-| **Reset Zoom** | `Ctrl + 0` | Resets zoom level to 100% |
-| **Mouse Wheel Zoom** | `Ctrl + Wheel Up / Down` | Instant wheel-based magnification |
-| **Middle Click Reset** | `Ctrl + Mouse 3 (Wheel Click)` | Resets current tab zoom to 100% |
-| **Save Zoom** | `Alt + S` | Persists current zoom level for this address |
-| **Delete Saved Zoom** | `Alt + D` | Deletes saved zoom rule and resets tab to 100% |
+| Action                 | Shortcut / Trigger             | Description                                           |
+| :--------------------- | :----------------------------- | :---------------------------------------------------- |
+| **Zoom In**            | `Ctrl + +`                     | Increases zoom by configured step size (default: 10%) |
+| **Zoom Out**           | `Ctrl + -`                     | Decreases zoom by configured step size                |
+| **Reset Zoom**         | `Ctrl + 0`                     | Resets zoom level to 100%                             |
+| **Mouse Wheel Zoom**   | `Ctrl + Wheel Up / Down`       | Instant wheel-based magnification                     |
+| **Middle Click Reset** | `Ctrl + Mouse 3 (Wheel Click)` | Resets current tab zoom to 100%                       |
+| **Save Zoom**          | `Alt + S`                      | Persists current zoom level for this address          |
+| **Delete Saved Zoom**  | `Alt + D`                      | Deletes saved zoom rule and resets tab to 100%        |
 
-> *All keyboard shortcuts can be customized in the extension popup.*
+> _All keyboard shortcuts can be customized in the extension popup._
 
 ---
 
@@ -195,25 +202,9 @@ page-zoom-extension/
 
 Page Zoom Manager is strictly private and offline-first:
 
-* **`tabs`**: Used to identify the active tab's URL and apply tab-isolated zoom settings via the Chrome Zoom API.
-* **`storage`**: Used to save user preferences locally (custom shortcuts, step size, domain rules, saved zoom ratios).
-* **`host_permissions` (`<all_urls>`)**: Required to inject content listeners so that `Ctrl + Wheel`, `Ctrl + Mouse 3`, and custom keybindings function smoothly on web pages.
-* **Zero Data Collection**: No telemetry, analytics, or external server calls. All logic and storage remain 100% local on your device.
+- **`tabs`**: Used to identify the active tab's URL and apply tab-isolated zoom settings via the Chrome Zoom API.
+- **`storage`**: Used to save user preferences locally (custom shortcuts, step size, domain rules, saved zoom ratios).
+- **`host_permissions` (`<all_urls>`)**: Required to inject content listeners so that `Ctrl + Wheel`, `Ctrl + Mouse 3`, and custom keybindings function smoothly on web pages.
+- **Zero Data Collection**: No telemetry, analytics, or external server calls. All logic and storage remain 100% local on your device.
 
 ---
-
-## 🤝 Contributing
-
-Contributions, bug reports, and suggestions are welcome!
-
-1. Fork the repository.
-2. Create your feature branch (`git checkout -b feature/amazing-feature`).
-3. Commit your changes (`git commit -m 'feat: add amazing feature'`).
-4. Push to the branch (`git push origin feature/amazing-feature`).
-5. Open a Pull Request.
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License — see the [LICENSE](LICENSE) file for details.
