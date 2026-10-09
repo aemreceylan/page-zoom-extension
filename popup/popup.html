@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Zoom Manager</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-brand">
+        <img src="../icons/icon-48.png" alt="Logo" class="brand-icon">
+        <div class="brand-text">
+          <h1 class="brand-title" data-i18n="appName">Page Zoom Manager</h1>
+          <span class="brand-subtitle" id="domainBadge">example.com</span>
+        </div>
+      </div>
+      <div class="header-actions">
+        <!-- Global Enable Switch -->
+        <label class="toggle-switch" for="globalEnableToggle" title="Toggle Extension">
+          <input type="checkbox" id="globalEnableToggle" aria-label="Toggle Extension" checked>
+          <span class="slider"></span>
+        </label>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="nav-tab active" data-tab="tabZoom">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          <line x1="11" y1="8" x2="11" y2="14"></line>
+          <line x1="8" y1="11" x2="14" y2="11"></line>
+        </svg>
+        <span data-i18n="tabZoom">Yakınlaştırma</span>
+      </button>
+      <button class="nav-tab" data-tab="tabSites">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path>
+        </svg>
+        <span data-i18n="tabSites">Siteler</span>
+      </button>
+      <button class="nav-tab" data-tab="tabShortcuts">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+          <path d="M6 8h.01M10 8h.01M14 8h.01M18 8h.01M8 12h.01M12 12h.01M16 12h.01M7 16h10"></path>
+        </svg>
+        <span data-i18n="tabShortcuts">Kısayollar</span>
+      </button>
+      <button class="nav-tab" data-tab="tabSettings">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+        <span data-i18n="tabSettings">Ayarlar</span>
+      </button>
+    </nav>
+
+    <!-- Tab 1: Zoom -->
+    <main class="tab-content active" id="tabZoom">
+      <!-- Inapplicable Notice for internal chrome pages -->
+      <div class="system-page-alert hidden" id="systemPageAlert">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span data-i18n="notApplicable">Bu sayfada kullanılamaz (Chrome iç sayfası)</span>
+      </div>
+
+      <!-- Zoom Display Card -->
+      <section class="zoom-card">
+        <div class="zoom-value-wrapper">
+          <span class="zoom-label" data-i18n="currentZoom">Mevcut Oran</span>
+          <div class="zoom-percentage-container" id="zoomPercentageContainer">
+            <div class="zoom-percentage" id="zoomPercentageDisplay" title="Tıklayarak değer girin veya fare tekerleğiyle değiştirin">100%</div>
+            <input type="text" id="zoomPercentageInput" class="zoom-percentage-input hidden" maxlength="3" inputmode="numeric" placeholder="100" aria-label="Zoom Percentage">
+          </div>
+          <span class="tab-scope-badge" id="tabScopeBadge" data-i18n="tabIsolated">Sekme İzole Edildi</span>
+        </div>
+
+        <!-- Controls: Buttons & Slider -->
+        <div class="zoom-slider-row">
+          <button class="icon-btn" id="btnZoomOut" title="Zoom Out">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </button>
+          <input type="range" id="zoomSlider" min="25" max="300" step="5" value="100" class="zoom-slider" aria-label="Zoom Slider">
+          <button class="icon-btn" id="btnZoomIn" title="Zoom In">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+
+        <button class="reset-pill-btn" id="btnResetZoom">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+            <path d="M3 3v5h5"></path>
+          </svg>
+          <span data-i18n="zoomReset">Sıfırla (%100)</span>
+        </button>
+
+        <!-- Presets -->
+        <div class="presets-section">
+          <span class="presets-label" data-i18n="presets">Hızlı Seçim</span>
+          <div class="preset-chips">
+            <button class="chip" data-preset="0.5">50%</button>
+            <button class="chip" data-preset="0.75">75%</button>
+            <button class="chip" data-preset="0.9">90%</button>
+            <button class="chip" data-preset="1.0">100%</button>
+            <button class="chip" data-preset="1.1">110%</button>
+            <button class="chip" data-preset="1.25">125%</button>
+            <button class="chip" data-preset="1.5">150%</button>
+            <button class="chip" data-preset="2.0">200%</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Persistence Card -->
+      <section class="persistence-card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h3 data-i18n="saveSectionTitle">Kayıt ve Kalıcılık</h3>
+            <span class="status-pill" id="savedStatusPill" data-i18n="noSavedZoom">Kayıtlı oran yok (geçici)</span>
+          </div>
+        </div>
+        <p class="card-hint" data-i18n="statelessNotice">Varsayılan olarak geçicidir (sekmeye özel).</p>
+
+        <!-- Action Buttons -->
+        <div class="save-actions">
+          <button class="action-btn save-url-btn" id="btnSaveUrl">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+              <polyline points="17 21 17 13 7 13 7 21"></polyline>
+              <polyline points="7 3 7 8 15 8"></polyline>
+            </svg>
+            <span data-i18n="btnSaveUrl">Bu Adres İçin Kaydet</span>
+          </button>
+        </div>
+
+        <!-- Auto-Save inside Persistence Card -->
+        <div class="auto-save-row">
+          <div class="auto-save-info">
+            <label for="autoSaveSelect" class="auto-save-label" data-i18n="autoSaveLabel">Kayıt Modu</label>
+            <small class="auto-save-desc" data-i18n="autoSaveDesc">Açıkken yapılan zoomlar kaydedilir ve aynı adresteki sekmeler anlık eşitlenir</small>
+          </div>
+          <select id="autoSaveSelect" class="form-select mini" aria-label="Auto-Save Mode">
+            <option value="off" data-i18n="autoSaveOff">Kapalı (Geçici)</option>
+            <option value="url" data-i18n="autoSaveUrl">Açık (Bu Adres İçin)</option>
+            <option value="always" data-i18n="autoSaveAlways">Her Zaman Açık (Tüm Adresler)</option>
+          </select>
+        </div>
+
+        <button class="delete-saved-btn" id="btnDeleteSaved">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          <span data-i18n="btnDeleteSaved">Kaydı Sil & Sıfırla</span>
+        </button>
+      </section>
+    </main>
+
+    <!-- Tab 2: Sites -->
+    <main class="tab-content" id="tabSites">
+      <section class="sites-section">
+        <!-- List Mode Switch -->
+        <div class="setting-row">
+          <div>
+            <label for="listModeSelect" class="setting-title" data-i18n="listMode">Çalışma Modu</label>
+            <p class="setting-desc" id="modeDesc" data-i18n="blacklistDesc">Tüm sitelerde aktiftir, listedekiler hariç.</p>
+          </div>
+          <select id="listModeSelect" class="form-select" aria-label="List Mode">
+            <option value="blacklist" data-i18n="blacklistMode">Kara Liste (Hariç)</option>
+            <option value="whitelist" data-i18n="whitelistMode">Beyaz Liste (İzinli)</option>
+          </select>
+        </div>
+
+        <!-- Quick Current Site Action -->
+        <div class="current-site-box">
+          <div class="current-site-info">
+            <span class="sub-label" data-i18n="currentSite">Mevcut Site:</span>
+            <strong id="currentSiteText">example.com</strong>
+          </div>
+          <button class="toggle-site-btn" id="btnToggleCurrentSite" data-i18n="btnAddCurrent">
+            Mevcut Siteyi Listeye Ekle
+          </button>
+        </div>
+
+        <!-- Add Manual Site -->
+        <div class="add-site-form">
+          <input type="text" id="manualSiteInput" class="form-input" placeholder="Örn: github.com" aria-label="Add site domain">
+          <button class="btn-primary" id="btnAddManualSite" data-i18n="btnAdd">Ekle</button>
+        </div>
+
+        <!-- Sites List -->
+        <div class="sites-list-header">
+          <span class="sites-count" id="sitesCountText">Siteler (0)</span>
+          <button class="text-btn danger" id="btnClearSiteList" data-i18n="clearList">Temizle</button>
+        </div>
+        <div class="sites-list" id="sitesListContainer">
+          <div class="empty-state" data-i18n="emptyList">Listede henüz site bulunmuyor.</div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Tab 3: Shortcuts -->
+    <main class="tab-content" id="tabShortcuts">
+      <section class="shortcuts-section">
+        <p class="card-hint" data-i18n="shortcutsHint">Değiştirmek istediğiniz kısayol kutucuğuna tıklayıp yeni tuşlara basın.</p>
+
+        <div class="shortcuts-list">
+          <div class="shortcut-item">
+            <div class="shortcut-label-group">
+              <strong data-i18n="shortcutZoomIn">Yakınlaştır (Zoom In)</strong>
+              <small>Varsayılan: Ctrl + +</small>
+            </div>
+            <button class="shortcut-key-btn" data-shortcut="zoomIn">Ctrl + +</button>
+          </div>
+
+          <div class="shortcut-item">
+            <div class="shortcut-label-group">
+              <strong data-i18n="shortcutZoomOut">Uzaklaştır (Zoom Out)</strong>
+              <small>Varsayılan: Ctrl + -</small>
+            </div>
+            <button class="shortcut-key-btn" data-shortcut="zoomOut">Ctrl + -</button>
+          </div>
+
+          <div class="shortcut-item">
+            <div class="shortcut-label-group">
+              <strong data-i18n="shortcutReset">Sıfırla (%100)</strong>
+              <small>Varsayılan: Ctrl + 0</small>
+            </div>
+            <button class="shortcut-key-btn" data-shortcut="reset">Ctrl + 0</button>
+          </div>
+
+          <div class="shortcut-item">
+            <div class="shortcut-label-group">
+              <strong data-i18n="shortcutSave">Zoom'u Kaydet</strong>
+              <small>Varsayılan: Alt + S</small>
+            </div>
+            <button class="shortcut-key-btn" data-shortcut="save">Alt + S</button>
+          </div>
+
+          <div class="shortcut-item">
+            <div class="shortcut-label-group">
+              <strong data-i18n="shortcutDelete">Kaydı Sil & Sıfırla</strong>
+              <small>Varsayılan: Alt + D</small>
+            </div>
+            <button class="shortcut-key-btn" data-shortcut="delete">Alt + D</button>
+          </div>
+        </div>
+
+        <!-- Mouse 3 Info Box -->
+        <div class="info-card">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <div>
+            <strong>Fare Kısayolları (Mouse 3):</strong>
+            <p>• <code>Ctrl + Fare Tekerleği</code>: Anlık yakınlaştır / uzaklaştır.</p>
+            <p>• <code>Ctrl + Tekerlek Tıklaması</code>: Zoom'u %100'e sıfırlar.</p>
+          </div>
+        </div>
+
+        <button class="reset-shortcuts-btn" id="btnResetShortcuts" data-i18n="btnResetShortcuts">
+          Kısayolları Varsayılana Sıfırla
+        </button>
+      </section>
+    </main>
+
+    <!-- Tab 4: Settings -->
+    <main class="tab-content" id="tabSettings">
+      <section class="settings-section">
+        <!-- Step size -->
+        <div class="setting-row">
+          <div>
+            <label for="stepSizeSelect" class="setting-title" data-i18n="stepLabel">Kısayol Adım Hassasiyeti</label>
+            <p class="setting-desc">Tekerlek ve tuşlarda artış/azalış miktarı</p>
+          </div>
+          <select id="stepSizeSelect" class="form-select" aria-label="Step Size">
+            <option value="0.05">%5</option>
+            <option value="0.10">%10 (Varsayılan)</option>
+            <option value="0.15">%15</option>
+            <option value="0.20">%20</option>
+            <option value="0.25">%25</option>
+          </select>
+        </div>
+
+        <!-- Badge toggle -->
+        <div class="setting-row">
+          <div>
+            <label for="showBadgeToggle" class="setting-title" data-i18n="badgeLabel">İkon üzerinde yüzdeyi göster</label>
+            <p class="setting-desc" data-i18n="badgeDesc">Eklenti ikonu üzerinde anlık yüzde rozeti</p>
+          </div>
+          <label class="toggle-switch" for="showBadgeToggle" title="Show Badge">
+            <input type="checkbox" id="showBadgeToggle" aria-label="Show Badge Toggle" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <!-- Language in Settings -->
+        <div class="setting-row">
+          <div>
+            <label for="settingsLangSelect" class="setting-title" data-i18n="languageLabel">Dil (Language)</label>
+            <p class="setting-desc">Arayüz görüntüleme dili</p>
+          </div>
+          <select id="settingsLangSelect" class="form-select" aria-label="Language Select">
+            <option value="tr">🇹🇷 Türkçe (TR)</option>
+            <option value="en">🇺🇸 English (US)</option>
+            <option value="de">🇩🇪 Deutsch (DE)</option>
+            <option value="es">🇪🇸 Español (ES)</option>
+            <option value="fr">🇫🇷 Français (FR)</option>
+            <option value="ru">🇷🇺 Русский (RU)</option>
+            <option value="ja">🇯🇵 日本語 (JA)</option>
+          </select>
+        </div>
+
+        <div class="footer-note">
+          <span>Page Zoom Manager v1.0.0</span>
+          <span>Manifest V3</span>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script type="module" src="popup.js"></script>
+</body>
+</html>
